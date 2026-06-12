@@ -2,6 +2,7 @@ import requests
 from lxml import etree
 import os
 import time
+import random
 # 设置请求头，模拟浏览器访问
 headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36'
@@ -18,9 +19,11 @@ def get_html_info(page):
 def get_pic(resp_html):
     pic_url_list = []
     lis = resp_html.xpath('//*[@id="thumbs"]/section[1]/ul/li') # 获取该页所有缩略图包含的信息
+    
     for li in lis:
         pic_url = li.xpath('./figure/a/@href')[0] # 获取存放在缩略图信息中的缩略图原图网址
         pic_url_list.append(pic_url)
+
     for pic_url in pic_url_list:
         resp2 = requests.get(pic_url,headers=headers)
         r_html2 = etree.HTML(resp2.text)
@@ -44,7 +47,9 @@ def get_pic(resp_html):
         with open('Wallhaven\\' + pic_size +final_url[-10:],mode='wb') as f:
             f.write(pic) # 保存图片
             print(pic_size + final_url[-10:]+'，下载完毕，已下载{}张壁纸'.format(len(os.listdir('Wallhaven'))))
-
+        # 随机休眠1秒，避免过于频繁的请求导致被封禁
+        time.sleep(random.uniform(0.5, 2))
+        
 def main():
     page_range = range(2,51) # 爬取1-50页的壁纸
     for i in page_range:
