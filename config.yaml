@@ -1,0 +1,27 @@
+# ============ Wallhaven 壁纸爬虫配置 ============
+
+# 运行模式：toplist(热榜模式)、search(搜索模式) 或 hot(热门模式)
+mode: hot
+
+# 搜索关键词（仅 search 模式生效）
+search_keyword: "view"
+
+# 爬取页码范围
+page_start: 1
+page_end: 30
+
+# 壁纸保存目录（支持绝对路径如 D:/Wallpapers 或相对路径如 Wallhaven）
+save_dir: Wallhaven
+
+# 是否按日期创建子文件夹（如 Wallhaven/2026-06-12/）
+create_date_subfolder: true
+
+# 是否按搜索关键词创建子文件夹（仅 search 模式生效，如 Wallhaven/关键词/）
+create_keyword_subfolder: true
+
+# 日志保存目录
+log_dir: logs
+
+# 请求间隔（秒），避免过于频繁被封禁
+request_delay_min: 0.5
+request_delay_max: 2
